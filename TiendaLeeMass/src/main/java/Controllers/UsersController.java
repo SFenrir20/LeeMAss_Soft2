@@ -16,4 +16,10 @@ public class UsersController {
     public List<Users> getUsersesController(){
             return new UsersRepository().getAllUserse();
         }
+    
+    public void InsertUserController(Users us){
+            new UsersRepository().addUser(us);  
+    }
+    
+    
 }
