@@ -16,25 +16,15 @@ import java.sql.ResultSet;
 public class LoginRepository implements ILogin {
 
     @Override
-    public boolean VerificarCredenciales(Users us) {
+    public boolean VerificarCredenciales(String userDni, String UserPass) {
           ResultSet rs = null;
         try {
-            CallableStatement cl = Conexion.ObtenerConnection().prepareCall("{Call GetUser_Dni}");
-            cl.setString(1, us.getDni());
+            CallableStatement cl = Conexion.ObtenerConnection().prepareCall("{Call GetUser_Dni(?,?)}");
+            cl.setString(1, userDni);
+            cl.setString(2, UserPass);
             rs = cl.executeQuery();
             if(rs.next()){
-                if(us.getContraseñas().equals(rs.getString("Contraseña"))){
-                    us.setCodigo(rs.getInt("idUser"));
-                    us.setNombre(rs.getString("NomUser"));
-                    us.setApellido(rs.getString("ApeUser"));
-                    us.setTelefono(rs.getString("TelefonoUser"));
-                    us.setTypeUser(rs.getString(""));
-                    us.setEmail(rs.getString("Email"));
-                    us.setId_TypoUser(rs.getInt("Id_TypeUser"));
-                    us.setEstado(rs.getBoolean("Estado"));
-                    return true;
-                }
-                return false;
+                return true;
             }
             Conexion.ObtenerConnection().close();
         } catch (Exception e) {

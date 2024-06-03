@@ -11,5 +11,5 @@ import Models.Users;
  * @author santi
  */
 public interface ILogin {
-    boolean VerificarCredenciales(Users us);
+    boolean VerificarCredenciales(String dni, String pass);
 }
