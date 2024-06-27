@@ -9,7 +9,7 @@ package Models;
  * @author santi
  */
 public class Libro {
-     private int codigo; 
+    private int codigo; 
     private String titulo;
     private String autor;  
     private String descripcion;
