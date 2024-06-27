@@ -19,7 +19,27 @@ public class UsersController {
     
     public void InsertUserController(Users us){
             new UsersRepository().addUser(us);  
+    }   
+    
+    public void RemoverUser(Users us){
+        new UsersRepository().removerUser(us);
     }
     
+     public void UpdateUser(Users us){
+        new UsersRepository().updateUser(us);
+    }
+    
+     public int GetCorrelativoController(){
+        return new UsersController().GetCorrelativoController();
+    }
+     
+    public int GetId_NomUSer(String nom){
+        return  new UsersController().GetId_NomUSer(nom);
+    }
+    
+     public Users BuscarCodigoController(int codigo){
+        return new UsersRepository().SearchUser(codigo);
+    }
+     
     
 }

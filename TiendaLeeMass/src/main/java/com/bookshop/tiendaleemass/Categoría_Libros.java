@@ -4,11 +4,18 @@
  */
 package com.bookshop.tiendaleemass;
 
+
 /**
  *
  * @author Daniela
  */
 public class Categoría_Libros extends javax.swing.JInternalFrame {
+    
+    
+    
+    
+    
+    
 
     /**
      * Creates new form Categoría_Libros
@@ -16,6 +23,8 @@ public class Categoría_Libros extends javax.swing.JInternalFrame {
     public Categoría_Libros() {
         initComponents();
     }
+    
+     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -62,6 +71,11 @@ public class Categoría_Libros extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tableCategoria);
 
         btn_Buscar.setText("Buscar");
+        btn_Buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_BuscarActionPerformed(evt);
+            }
+        });
 
         btn_Nuevo.setText("Nuevo");
 
@@ -164,6 +178,10 @@ public class Categoría_Libros extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_BuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_BuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

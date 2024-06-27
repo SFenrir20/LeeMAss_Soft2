@@ -4,17 +4,48 @@
  */
 package com.bookshop.tiendaleemass;
 
+import Controllers.CategoriaController;
+import Models.TypeUser;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Daniela
  */
 public class Registrar_TypeUser extends javax.swing.JInternalFrame {
+    
+    private DefaultTableModel dtmCategoria = new DefaultTableModel();
+    private CategoriaController CatController = new CategoriaController();
 
     /**
      * Creates new form Registrar_TypeUser
      */
     public Registrar_TypeUser() {
         initComponents();
+        llenarTabla();
+        ListarTabla();
+    }
+    
+    public void llenarTabla(){
+        dtmCategoria.addColumn("Codigo");
+        dtmCategoria.addColumn("Nombre Categoria");
+        dtmCategoria.addColumn("Descripcion");
+    }
+    
+    public void ListarTabla(){
+        dtmCategoria.setRowCount(0);
+        List<TypeUser> lst = CatController.getLstCategoriasController();
+        for (int i=0;i<lst.size();i++){
+            Object[] vec = new Object[3];
+            vec[0] = lst.get(i).getId_TypeUser();
+            vec[1] = lst.get(i).getNomTypeU();
+            vec[2] = lst.get(i).getDes_TypeU();
+            
+            dtmCategoria.addRow(vec);
+        }
+        this.table_TypeUser.setModel(dtmCategoria);
     }
 
     /**
@@ -32,9 +63,9 @@ public class Registrar_TypeUser extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table_TypeUser = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        txtCodigo = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtDes = new javax.swing.JTextField();
         btn_Buscar = new javax.swing.JButton();
         txt_Buscar = new javax.swing.JTextField();
         btn_Nuevo = new javax.swing.JButton();
@@ -62,14 +93,39 @@ public class Registrar_TypeUser extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(table_TypeUser);
 
         btn_Buscar.setText("Buscar");
+        btn_Buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_BuscarActionPerformed(evt);
+            }
+        });
 
         btn_Nuevo.setText("Nuevo");
+        btn_Nuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_NuevoActionPerformed(evt);
+            }
+        });
 
         btn_Guardar.setText("Guardar");
+        btn_Guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_GuardarActionPerformed(evt);
+            }
+        });
 
         btn_Editar.setText("Editar");
+        btn_Editar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EditarActionPerformed(evt);
+            }
+        });
 
         btn_Eliminar.setText("Eliminar");
+        btn_Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -83,9 +139,9 @@ public class Registrar_TypeUser extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE))
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombre)
+                    .addComponent(txtDes, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE))
                 .addGap(67, 67, 67)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btn_Buscar)
@@ -111,7 +167,7 @@ public class Registrar_TypeUser extends javax.swing.JInternalFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_Buscar)
                     .addComponent(txt_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,7 +175,7 @@ public class Registrar_TypeUser extends javax.swing.JInternalFrame {
                         .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(53, 53, 53)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -130,7 +186,7 @@ public class Registrar_TypeUser extends javax.swing.JInternalFrame {
                         .addGap(25, 25, 25)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtDes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(30, 30, 30))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -161,6 +217,57 @@ public class Registrar_TypeUser extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_BuscarActionPerformed
+        // TODO add your handling code here:
+        List<TypeUser> lst = CatController.BuscarCodigoController(Integer.parseInt(this.txt_Buscar.getText()));
+        for(TypeUser x:lst){
+            this.txtNombre.setText(x.getNomTypeU());
+           // System.out.println("error 1");
+            this.txtDes.setText(x.getDes_TypeU());
+            txt_Buscar.setText("");
+        }
+    }//GEN-LAST:event_btn_BuscarActionPerformed
+
+    private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
+        // TODO add your handling code here:
+         TypeUser objCat = new TypeUser();
+        objCat.setId_TypeUser(Integer.parseInt(this.txtCodigo.getText()));
+        CatController.EliminarCategoriaController(objCat);
+
+        JOptionPane.showMessageDialog(this, "¿Deseas borrar registro?");
+    }//GEN-LAST:event_btn_EliminarActionPerformed
+
+    private void btn_EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EditarActionPerformed
+        // TODO add your handling code here:
+        TypeUser objCat = new TypeUser();
+        objCat.setId_TypeUser(Integer.parseInt(this.txtCodigo.getText()));
+        objCat.setNomTypeU(this.txtNombre.getText());
+        objCat.setDes_TypeU(this.txtDes.getText());
+        
+        CatController.ActualizarCategoriaController(objCat);
+        JOptionPane.showMessageDialog(this, "Registro correcto");
+        ListarTabla();
+    }//GEN-LAST:event_btn_EditarActionPerformed
+
+    private void btn_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GuardarActionPerformed
+        // TODO add your handling code here:
+        TypeUser objCat = new TypeUser();
+        objCat.setId_TypeUser(Integer.parseInt(this.txtCodigo.getText()));
+        objCat.setNomTypeU(this.txtNombre.getText());
+        objCat.setDes_TypeU(this.txtDes.getText());
+        
+        CatController.InsertarCategoriaController(objCat);
+        JOptionPane.showMessageDialog(this, "Registro correcto");
+        ListarTabla();
+    }//GEN-LAST:event_btn_GuardarActionPerformed
+
+    private void btn_NuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NuevoActionPerformed
+        // TODO add your handling code here:
+        txtCodigo.setText(CatController.GetCorrelativoController()+"");
+        txtNombre.setText("");
+        txtDes.setText("");
+    }//GEN-LAST:event_btn_NuevoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Buscar;
@@ -173,10 +280,10 @@ public class Registrar_TypeUser extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTable table_TypeUser;
+    private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtDes;
+    private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txt_Buscar;
     // End of variables declaration//GEN-END:variables
 }
