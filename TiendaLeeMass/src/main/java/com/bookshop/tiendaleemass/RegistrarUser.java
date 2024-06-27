@@ -4,11 +4,16 @@
  */
 package com.bookshop.tiendaleemass;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.table.DefaultTableModel;
-import Models.Users;
+
+import Controllers.CategoriaController;
 import Controllers.UsersController;
-import java.util.List;
+import Models.TypeUser;
+import Models.Users;
+import java.util.ArrayList;
+import java.util.List;  
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,6 +24,7 @@ public class RegistrarUser extends javax.swing.JInternalFrame {
     private DefaultComboBoxModel cbxType = new DefaultComboBoxModel();
     private DefaultComboBoxModel cboxActive = new DefaultComboBoxModel();
     private UsersController uController = new UsersController();
+     private CategoriaController CatController = new CategoriaController();
     
 
     /**
@@ -61,8 +67,18 @@ public class RegistrarUser extends javax.swing.JInternalFrame {
      }
      this.tableUser.setModel(dtmUser);
     }
-    public void LlenarTypeUser(){}
-    public void LlenarCbox(){}
+    public void LlenarTypeUser(){
+        List<TypeUser> lst = CatController.GetAllCategroiaController();
+        for(TypeUser item:lst){
+            this.cboxTypeUs.addItem(  item.getNomTypeU());
+        }
+    }
+    public void LlenarCbox(){
+        
+    }
+    public String GetSelectedCat(){
+        return cboxTypeUs.getSelectedItem().toString();
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -93,12 +109,12 @@ public class RegistrarUser extends javax.swing.JInternalFrame {
         txtEmail = new javax.swing.JTextField();
         cboxTypeUs = new javax.swing.JComboBox<>();
         cboxEstado = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btn_buscar = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btn_new = new javax.swing.JButton();
+        btn_save = new javax.swing.JButton();
+        btn_editar = new javax.swing.JButton();
+        btn_delete = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableUser = new javax.swing.JTable();
 
@@ -145,15 +161,40 @@ public class RegistrarUser extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setText("Buscar");
+        btn_buscar.setText("Buscar");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Nuevo");
+        btn_new.setText("Nuevo");
+        btn_new.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_newActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Guardar");
+        btn_save.setText("Guardar");
+        btn_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_saveActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Editar");
+        btn_editar.setText("Editar");
+        btn_editar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_editarActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("Eliminar");
+        btn_delete.setText("Eliminar");
+        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteActionPerformed(evt);
+            }
+        });
 
         tableUser.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -209,7 +250,7 @@ public class RegistrarUser extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
-                                    .addComponent(jButton2))
+                                    .addComponent(btn_new))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -219,19 +260,19 @@ public class RegistrarUser extends javax.swing.JInternalFrame {
                                             .addComponent(cboxTypeUs, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(2, 2, 2)
-                                        .addComponent(jButton3)
+                                        .addComponent(btn_save)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(btn_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1)
+                                .addComponent(btn_buscar)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(36, 36, 36))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(34, 34, 34)
-                                .addComponent(jButton5)
+                                .addComponent(btn_delete)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         layout.setVerticalGroup(
@@ -241,7 +282,7 @@ public class RegistrarUser extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txt_IdUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
+                    .addComponent(btn_buscar)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -277,10 +318,10 @@ public class RegistrarUser extends javax.swing.JInternalFrame {
                     .addComponent(cboxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(btn_new)
+                    .addComponent(btn_save)
+                    .addComponent(btn_editar)
+                    .addComponent(btn_delete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -293,15 +334,118 @@ public class RegistrarUser extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelefonoActionPerformed
 
+    private void btn_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newActionPerformed
+        // TODO add your handling code here:
+        txt_IdUser.setText(uController.GetCorrelativoController()+"");
+        txtDni.setText("");
+        txtNombre.setText("");
+        txtApellidos.setText("");
+        txtPassw.setText("");
+        txtTelefono.setText("");
+        //txtCategoria.setText("");
+        txtEmail.setText("");
+        txtSearch.setText("");
+        
+         txt_IdUser.setEditable(true);
+         txtPassw.setEditable(true);
+    }//GEN-LAST:event_btn_newActionPerformed
+
+    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
+        // TODO add your handling code here:
+        Users objUsuario = new Users();
+        objUsuario.setCodigo(Integer.parseInt(this.txt_IdUser.getText()));
+        uController.RemoverUser(objUsuario);
+        
+        JOptionPane.showMessageDialog(this, "¿Deseas borrar registro?");
+            LlenarLista();
+    }//GEN-LAST:event_btn_deleteActionPerformed
+
+    private void btn_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editarActionPerformed
+        // TODO add your handling code here:
+        Users old = uController.BuscarCodigoController(Integer.parseInt(this.txt_IdUser.getText()));
+        TypeUser objCats = CatController.GetCategoriaXNombre(GetSelectedCat());
+        Users objUS = new Users();
+        objUS.setCodigo(Integer.parseInt(this.txt_IdUser.getText()));
+        objUS.setDni(this.txtDni.getText());
+        objUS.setNombre(this.txtNombre.getText());
+        objUS.setApellido(this.txtApellidos.getText());
+        objUS.setTelefono(this.txtTelefono.getText());
+        objUS.setTypeUser(objCats.getNomTypeU());
+        objUS.setContraseñas(old.getContraseñas());
+        objUS.setId_TypoUser(objCats.getId_TypeUser());
+        objUS.setEmail(this.txtEmail.getText());
+        
+        uController.InsertUserController(objUS);
+        JOptionPane.showMessageDialog(this, "Registro Actualizado!!");
+        LlenarLista();
+    }//GEN-LAST:event_btn_editarActionPerformed
+
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+        // TODO add your handling code here:
+         TypeUser objCat = CatController.GetCategoriaXNombre(GetSelectedCat());
+        Users objUsuario = new Users();
+        objUsuario.setCodigo(Integer.parseInt(this.txt_IdUser.getText()));
+        objUsuario.setDni(this.txtDni.getText());
+        objUsuario.setNombre(this.txtNombre.getText());
+        objUsuario.setApellido(this.txtApellidos.getText());
+        objUsuario.setTelefono(this.txtTelefono.getText());
+        objUsuario.setContraseñas(this.txtPassw.getText());
+        objUsuario.setTypeUser(objCat.getNomTypeU());
+        objUsuario.setContraseñas(this.txtPassw.getText());
+        objUsuario.setId_TypoUser(objCat.getId_TypeUser());
+        objUsuario.setEmail(this.txtEmail.getText());
+        
+        uController.InsertUserController(objUsuario);
+        Object selectItem = cboxTypeUs.getSelectedItem();
+        
+        List<String> camposVacios = new ArrayList<>();
+       // camposVacios.clear();
+        if(txt_IdUser.getText().isEmpty()){
+            camposVacios.add("txtCodigo");
+        }
+        if(txtNombre.getText().isEmpty()){
+            camposVacios.add("txtNombre");
+        }
+        if(selectItem == null){
+            camposVacios.add("CboxCategoria");
+        }
+        if(camposVacios.isEmpty()){
+              JOptionPane.showMessageDialog(this,"Registro grabado Satisfactorio");
+              LlenarLista();
+        }
+        else{
+            String mensaje = "Los siguientes campos están vacíos:\n";
+            for(String campo:camposVacios){
+                mensaje += campo + "\n";    
+            }
+            JOptionPane.showMessageDialog(null, mensaje);
+        }       
+    }//GEN-LAST:event_btn_saveActionPerformed
+
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        // TODO add your handling code here:
+          Users objUs = uController.BuscarCodigoController(Integer.parseInt(this.txt_IdUser.getText()));
+        
+            this.txtNombre.setText(objUs.getNombre());
+           // System.out.println("error 1");
+            this.cboxTypeUs.setSelectedItem(objUs.getTypeUser());
+           // System.out.println("error 2");
+            this.txtPassw.setText("");
+            this.txtEmail.setText(objUs.getEmail());
+            
+            txt_IdUser.setEditable(false);
+            txtPassw.setEditable(false);
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_buscar;
+    private javax.swing.JButton btn_delete;
+    private javax.swing.JButton btn_editar;
+    private javax.swing.JButton btn_new;
+    private javax.swing.JButton btn_save;
     private javax.swing.JComboBox<String> cboxEstado;
     private javax.swing.JComboBox<String> cboxTypeUs;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
